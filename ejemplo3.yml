@@ -1,0 +1,14 @@
+name: Flujo de trabajo1
+on: [push]
+jobs :
+# poniendo un nombre a nuestro jobs
+  prueba1:
+    # le diremos que instale en su ulima version al ubunto
+    runs-on : ubuntu-latest
+
+    # ahora creare los steps
+    steps:
+    # el primer step sera un checkout
+    - name: Mensaje
+    run: echo "Mi primera iteracion con github actions"
+    
