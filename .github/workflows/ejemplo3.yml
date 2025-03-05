@@ -30,3 +30,11 @@ jobs:
       # mostrar alumnos
       - name: mostrar alumnos
         run: cat alumnos.txt
+
+
+  #  creando otro jobs con nombre prueba 2
+  prueba2:
+    runs-on: ubuntu-latest
+    steps:
+      - name: muestra cambios de alumnos
+        run: cat alumnos.txt
