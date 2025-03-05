@@ -2,39 +2,60 @@ name: Flujo de trabajo1
 on: [push]
 
 jobs:
-  # poniendo un nombre a nuestro job
+  # Job 1: Crear y agregar alumnos
   prueba1:
-    # le diremos que instale en su última versión al Ubuntu
     runs-on: ubuntu-latest
 
-    # ahora crearé los steps
     steps:
-      # el primer step será un checkout (opcional, pero recomendado)
+      # 1. Hacer checkout del código
       - name: Mensaje
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2  # Usar la versión v2 de actions/checkout
 
-      # el segundo step será imprimir un mensaje
+      # 2. Imprimir mensaje
       - run: echo "Mi primera iteración con GitHub Actions"
-      
-      # se va crear un nuevo archivo
+
+      # 3. Crear archivo
       - name: crear archivo
         run: touch alumnos.txt
 
-      # agregar alumnos
-      - name: agregar alumno
+      # 4. Agregar alumnos al archivo
+      - name: agregar alumnos
         run: |
           echo "Juan Perez" >> alumnos.txt
           echo "Maria Garcia" >> alumnos.txt
           echo "Carlos Lopez" >> alumnos.txt
 
-      # mostrar alumnos
+      # 5. Verificar si alumnos.txt fue creado
+      - name: Verificar que alumnos.txt exista
+        run: ls -l alumnos.txt
+
+      # 6. Mostrar el contenido de alumnos.txt
       - name: mostrar alumnos
         run: cat alumnos.txt
 
+      # 7. Subir el archivo como artifact
+      - name: Guardar archivo alumnos.txt
+        uses: actions/upload-artifact@v3
+        with:
+          name: alumnos
+          path: alumnos.txt
 
-  #  creando otro jobs con nombre prueba 2
+  # Job 2: Mostrar cambios de alumnos
   prueba2:
     runs-on: ubuntu-latest
+    needs: prueba1  # Asegura que este job espere a que 'prueba1' termine correctamente
+
     steps:
-      - name: muestra cambios de alumnos
+      # 1. Descargar el archivo alumnos.txt
+      - name: Descargar archivo alumnos.txt
+        uses: actions/download-artifact@v3
+        with:
+          name: alumnos
+
+      # 2. Verificar si el archivo fue descargado correctamente
+      - name: Verificar si alumnos.txt existe
+        run: ls -l alumnos.txt  # Verifica si el archivo fue descargado correctamente
+
+      # 3. Mostrar el contenido de alumnos.txt
+      - name: Mostrar cambios de alumnos
         run: cat alumnos.txt
