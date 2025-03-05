@@ -15,3 +15,7 @@ jobs:
 
       # el segundo step será imprimir un mensaje
       - run: echo "Mi primera iteración con GitHub Actions"
+      
+      # se va crear un nuevo archivo
+      - name: crear archivo
+        run: touch alumnos.txt
