@@ -5,7 +5,7 @@ jobs:
   prueba1:
     runs-on: ubuntu-latest
     steps:
-      - name: Mensaje
+      - name: Checkout del repositorio
         uses: actions/checkout@v4
 
       - run: echo "Mi primera iteración con GitHub Actions"
@@ -24,7 +24,7 @@ jobs:
 
       # Subir el archivo como artifact para que pueda ser usado en el siguiente job
       - name: Guardar archivo alumnos.txt
-        uses: actions/upload-artifact@v2  # Usar la versión v2
+        uses: actions/upload-artifact@v4  # Actualizado a v4
         with:
           name: alumnos  # Nombre del artifact
           path: alumnos.txt
@@ -34,7 +34,7 @@ jobs:
     needs: prueba1  # Asegura que este job espere a que 'prueba1' termine correctamente
     steps:
       - name: Descargar archivo alumnos.txt
-        uses: actions/download-artifact@v2  # Usar la versión v2
+        uses: actions/download-artifact@v4  # Actualizado a v4
         with:
           name: alumnos  # Este debe ser el mismo nombre que el usado al subir el artifact
 
