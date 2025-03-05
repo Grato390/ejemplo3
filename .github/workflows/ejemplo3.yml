@@ -10,9 +10,9 @@ jobs:
     # ahora crearé los steps
     steps:
       # el primer step será un checkout (opcional, pero recomendado)
-      - name: Checkout del repositorio
+      runs on : ubuntu-latest
+      - name: Mensaje
         uses: actions/checkout@v4
 
       # el segundo step será imprimir un mensaje
-      - name: Mensaje
-        run: echo "Mi primera iteración con GitHub Actions"
+      run: echo "Mi primera iteración con GitHub Actions"
