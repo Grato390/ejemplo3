@@ -19,3 +19,11 @@ jobs:
       # se va crear un nuevo archivo
       - name: crear archivo
         run: touch alumnos.txt
+        - name: agregar alumno
+          run: |
+            echo "Juan Perez" >> alumnos.txt
+            echo "Maria Garcia" >> alumnos.txt
+            echo "Carlos Lopez" >> alumnos.txt
+
+        - name: mostrar alumnos
+          run: cat alumnos.txt
