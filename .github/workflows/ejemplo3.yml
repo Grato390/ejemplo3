@@ -25,7 +25,7 @@ jobs:
 
       # Subir el archivo como artifact para que pueda ser usado en el siguiente job
       - name: Guardar archivo alumnos.txt
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v2  # Usando la versión v2
         with:
           name: alumnos  # Nombre del artifact
           path: alumnos.txt
@@ -36,7 +36,7 @@ jobs:
     needs: prueba1  # Asegura que este job espere a que 'prueba1' termine correctamente
     steps:
       - name: Descargar archivo alumnos.txt
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v2  # Usando la versión v2
         with:
           name: alumnos  # Nombre del artifact que subiste
 
