@@ -18,6 +18,7 @@ jobs:
           MYSQL_PASSWORD: RootAdmin*
           ports:
             - 3306:3306
+jops:
         
     
 
