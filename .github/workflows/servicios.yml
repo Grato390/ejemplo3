@@ -1,0 +1,37 @@
+# ahora crearemos servicios crearemos una base de datos y todo
+name: corriendo-servicios
+on:
+  push:
+    branches:
+      - grato390
+
+jobs:
+  trabajo1:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: prueba
+          MYSQL_USER: postgres
+          MYSQL_PASSWORD: RootAdmin*
+          ports:
+            - 3306:3306
+        
+    
+
+
+
+
+
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@4
+      - name: Listar archivos
+        run: ls -la
+      - name: Corriendo servicios
+        run: docker-compose up -d
+      - name: Verificando servicios
+        run: docker-compose ps
