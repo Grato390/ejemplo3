@@ -5,14 +5,6 @@ on:
       - grato390
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout del repositorio
-        uses: actions/checkout@v4
-      - name: Listar archivos
-        run: ls -la
-
   trabajo1:
     runs-on: ubuntu-latest
     services:
@@ -23,7 +15,11 @@ jobs:
           MYSQL_DATABASE: prueba
           MYSQL_USER: usuario
           MYSQL_PASSWORD: password
-        options: --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=3
 
     steps:
       - name: Checkout del repositorio
@@ -35,16 +31,6 @@ jobs:
       - name: Instalar cliente MySQL
         run: sudo apt-get install -y mysql-client
 
-      - name: Crear tabla por defecto en la base de datos
-        run: |
-          mysql --host=127.0.0.1 --user=root --password=root -e "
-          CREATE TABLE IF NOT EXISTS prueba.usuarios (
-            id INT AUTO_INCREMENT PRIMARY KEY,
-            nombre VARCHAR(100) NOT NULL,
-            correo VARCHAR(100) UNIQUE NOT NULL
-          );"
-
-      - name: Verificar que la base de datos y tabla existen
+      - name: Verificar que MySQL está corriendo
         run: |
           mysql --host=127.0.0.1 --user=root --password=root -e "SHOW DATABASES;"
-          mysql --host=127.0.0.1 --user=root --password=root -e "USE prueba; SHOW TABLES;"
