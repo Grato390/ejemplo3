@@ -1,4 +1,4 @@
-name: workflow-servicios
+name: corriendo-servicios
 on:
   push:
     branches:
@@ -9,6 +9,31 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout del repositorio
-        uses: actions/checkout@4
+        uses: actions/checkout@v4
       - name: Listar archivos
         run: ls -la
+
+  trabajo1:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:5.7
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: prueba
+          MYSQL_USER: postgres
+          MYSQL_PASSWORD: RootAdmin*
+        ports:
+          - 3306:3306  # Corrige la indentación, debe estar al nivel de env.
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Listar archivos
+        run: ls -la
+
+      - name: Verificar si MySQL está corriendo
+        run: |
+          sudo apt-get install -y mysql-client
+          mysql --host=127.0.0.1 --user=postgres --password=RootAdmin* -e "SHOW DATABASES;"
