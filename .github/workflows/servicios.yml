@@ -13,15 +13,19 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: prueba
-          MYSQL_USER: usuario
-          MYSQL_PASSWORD: password
-        options: --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root" --health-interval=10s --health-timeout=5s --health-retries=3
+        ports:
+          - 3306:3306  # Mapeo del puerto para MySQL
 
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
+      - name: Esperar que MySQL inicie
+        run: sleep 15
+
+      - name: Instalar cliente MySQL
+        run: sudo apt-get install -y mysql-client
+
       - name: Verificar conexión a MySQL
         run: |
-          sudo apt-get install -y mysql-client
-          mysql --host=127.0.0.1 --user=root --password=root -e "SHOW DATABASES;"
+          mysql --host=127.0.0.1 --port=3306 --user=root --password=root -e "SHOW DATABASES;"
