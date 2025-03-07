@@ -10,5 +10,5 @@ jobs:
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
-      # - name: Listar archivos
+      - name: Listar archivos
         run: ls -la
