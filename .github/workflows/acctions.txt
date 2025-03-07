@@ -23,7 +23,6 @@ jobs:
           MYSQL_DATABASE: prueba
           MYSQL_USER: postgres
           MYSQL_PASSWORD: RootAdmin*
-        options: --health-cmd="mysqladmin ping --host=127.0.0.1 --user=postgres --password=RootAdmin*" --health-interval=10s --health-timeout=5s --health-retries=3 --health-start-period=10s
 
     steps:
       - name: Checkout del repositorio
