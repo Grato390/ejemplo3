@@ -21,12 +21,7 @@ jobs:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
-      - name: Esperar que MySQL inicie
-        run: sleep 15
-
-      - name: Instalar cliente MySQL
-        run: sudo apt-get install -y mysql-client
-
-      - name: Verificar que MySQL está corriendo
+      - name: Verificar conexión a MySQL
         run: |
+          sudo apt-get install -y mysql-client
           mysql --host=127.0.0.1 --user=root --password=root -e "SHOW DATABASES;"
