@@ -21,21 +21,30 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: root
           MYSQL_DATABASE: prueba
-          MYSQL_USER: postgres
-          MYSQL_PASSWORD: RootAdmin*
-        options: "--health-cmd='mysqladmin ping --host=127.0.0.1 --user=postgres --password=RootAdmin*' --health-interval=10s --health-timeout=5s --health-retries=3"
+          MYSQL_USER: usuario
+          MYSQL_PASSWORD: password
+        options: --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --password=root" --health-interval=10s --health-timeout=5s --health-retries=3
 
     steps:
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
-      - name: Listar archivos
-        run: ls -la
-
       - name: Esperar que MySQL inicie
         run: sleep 15
 
-      - name: Verificar conexión a MySQL
+      - name: Instalar cliente MySQL
+        run: sudo apt-get install -y mysql-client
+
+      - name: Crear tabla por defecto en la base de datos
         run: |
-          sudo apt-get install -y mysql-client
-          mysql --host=127.0.0.1 --user=postgres --password=RootAdmin* -e "SHOW DATABASES;"
+          mysql --host=127.0.0.1 --user=root --password=root -e "
+          CREATE TABLE IF NOT EXISTS prueba.usuarios (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            nombre VARCHAR(100) NOT NULL,
+            correo VARCHAR(100) UNIQUE NOT NULL
+          );"
+
+      - name: Verificar que la base de datos y tabla existen
+        run: |
+          mysql --host=127.0.0.1 --user=root --password=root -e "SHOW DATABASES;"
+          mysql --host=127.0.0.1 --user=root --password=root -e "USE prueba; SHOW TABLES;"
